@@ -1,4 +1,5 @@
 ﻿using BlazorServer.Data;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace BlazorServer.Pages
 {
-    public partial class FetchData
+    public class FetchDataBase : ComponentBase
     {
-        public IWeatherForecastService _forecastService { get; } = new NewWeatherForecastService();
+        [Inject]
+        public IWeatherForecastService _forecastService { get; set; }
 
-        private WeatherForecast[] forecasts;
+        public WeatherForecast[] forecasts;
 
         protected override async Task OnInitializedAsync()
         {
