@@ -1,0 +1,12 @@
+﻿@page "/Post"
+@inherits PostBase
+
+
+<EditForm Model="@Post">
+
+    <InputNumber @bind-Value="Post.Id"></InputNumber>
+    <InputText @bind-Value="Post.Title"></InputText>
+    <InputTextArea @bind-Value="Post.Content"></InputTextArea>
+
+    <button type="submit">Submit</button>
+</EditForm>

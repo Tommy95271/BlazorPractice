@@ -1,4 +1,3 @@
-using BlazorServer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +27,6 @@ namespace BlazorServer
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            //services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
-            services.AddSingleton<IWeatherForecastService, NewWeatherForecastService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
