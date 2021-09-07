@@ -22,5 +22,9 @@ namespace BlazorServer.Pages
             editContext.SetFieldCssClassProvider(new CustomFieldClassProvider());
             return base.OnInitializedAsync();
         }
+        protected void TitleChanged(string value)
+        {
+            Post.Title = value;
+        }
     }
 }
