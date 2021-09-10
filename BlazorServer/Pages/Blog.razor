@@ -1,0 +1,21 @@
+﻿@page "/Blog"
+@inherits BlogBase
+
+@if (Blog == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="form-group">
+        <label>部落格名稱</label>
+        <input @bind-value="Blog.BlogName" class="form-control w-25" />
+    </div>
+    foreach (var post in Blog.Posts)
+    {
+        <div class="border rounded p-3 w-25">
+            <Post Post="post"></Post>
+        </div>
+        <br />
+    }
+}
