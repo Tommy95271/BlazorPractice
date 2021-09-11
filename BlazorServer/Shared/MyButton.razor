@@ -1,7 +1,7 @@
 ﻿
 <input @attributes="InputAttributes" />
 @code {
-    [Parameter]
+    [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> InputAttributes { get; set; } =
         new Dictionary<string, object>()
         {

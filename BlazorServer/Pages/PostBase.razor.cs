@@ -27,8 +27,6 @@ namespace BlazorServer.Pages
         public Dictionary<string, object> InputAttributes { get; set; } =
             new Dictionary<string, object>()
             {
-                { "value", "Submit" },
-                { "class", "btn btn-primary" },
                 { "type", "button" },
             };
     }
