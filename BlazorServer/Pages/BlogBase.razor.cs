@@ -32,5 +32,6 @@ namespace BlazorServer.Pages
             };
         }
         public string ColorStyle { get; set; } = "color: goldenrod";
+        public string FontSizeStyle { get; set; } = "font-size: 24px";
     }
 }

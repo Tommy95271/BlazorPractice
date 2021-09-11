@@ -23,7 +23,9 @@ namespace BlazorServer.Pages
             Post.Title = value;
         }
 
-        [CascadingParameter]
+        [CascadingParameter(Name = "ColorStyle")]
         public string ColorStyle { get; set; }
+        [CascadingParameter(Name = "FontSizeStyle")]
+        public string FontSizeStyle { get; set; }
     }
 }

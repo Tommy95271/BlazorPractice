@@ -14,8 +14,10 @@ else
     foreach (var post in Blog.Posts)
     {
         <div class="border rounded p-3 w-25">
-            <CascadingValue Value="ColorStyle">
-                <Post Post="post"></Post>
+            <CascadingValue Value="FontSizeStyle" Name="FontSizeStyle" IsFixed="true">
+                <CascadingValue Value="ColorStyle" Name="ColorStyle">
+                    <Post Post="post"></Post>
+                </CascadingValue>
             </CascadingValue>
         </div>
         <br />
