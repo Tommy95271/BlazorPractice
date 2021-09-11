@@ -1,6 +1,7 @@
 ﻿using BlazorServer.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Pages
@@ -21,5 +22,14 @@ namespace BlazorServer.Pages
         {
             Post.Title = value;
         }
+
+        [Parameter]
+        public Dictionary<string, object> InputAttributes { get; set; } =
+            new Dictionary<string, object>()
+            {
+                { "value", "Submit" },
+                { "class", "btn btn-primary" },
+                { "type", "button" },
+            };
     }
 }

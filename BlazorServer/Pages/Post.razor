@@ -1,24 +1,24 @@
 ﻿@inherits PostBase
 
+<div class="form-group">
     <div class="form-group">
-        <div class="form-group">
-            <label>更新時間</label>
-            <input type="text" class="form-control" @bind="Post.CreateDateTime" @bind:format="yyyy-MM-dd hh:mm:ss" disabled />
-        </div>
-        <EditForm EditContext="editContext">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            @*<InputNumber @bind-Value="Post.Id" class="form-control w-25"></InputNumber>*@
-            <div class="form-group">
-                <label for="title">標題</label>
-                <input type="text" class="form-control" @bind="Post.Title" @bind:event="oninput" />
-            </div>
-
-            <div class="form-group">
-                <label for="content">內容</label>
-                <InputTextArea @bind-Value="Post.Content" id="content" class="form-control" rows="4"></InputTextArea>
-            </div>
-            <MyButton ButtonType="submit" ButtonClass="btn btn-info" ButtonName="Submit" />
-            <MyButton ButtonType="reset" ButtonClass="btn btn-danger" ButtonName="Reset" />
-        </EditForm>
+        <label>更新時間</label>
+        <input type="text" class="form-control" @bind="Post.CreateDateTime" @bind:format="yyyy-MM-dd hh:mm:ss" disabled />
     </div>
+    <EditForm EditContext="editContext">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        @*<InputNumber @bind-Value="Post.Id" class="form-control w-25"></InputNumber>*@
+        <div class="form-group">
+            <label for="title">標題</label>
+            <input type="text" class="form-control" @bind="Post.Title" @bind:event="oninput" />
+        </div>
+
+        <div class="form-group">
+            <label for="content">內容</label>
+            <InputTextArea @bind-Value="Post.Content" id="content" class="form-control" rows="4"></InputTextArea>
+        </div>
+        <MyButton InputAttributes="InputAttributes" />
+        <MyButton InputAttributes="InputAttributes" />
+    </EditForm>
+</div>
