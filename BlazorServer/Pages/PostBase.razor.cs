@@ -23,11 +23,5 @@ namespace BlazorServer.Pages
             Post.Title = value;
         }
 
-        [Parameter]
-        public Dictionary<string, object> InputAttributes { get; set; } =
-            new Dictionary<string, object>()
-            {
-                { "type", "button" },
-            };
     }
 }
