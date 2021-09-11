@@ -1,5 +1,5 @@
 ﻿
-<input @attributes="InputAttributes" />
+<input @attributes="InputAttributes" style="@ColorStyle"/>
 @code {
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> InputAttributes { get; set; } =
@@ -9,4 +9,7 @@
                 { "class", "btn btn-info" },
                 { "type", "button" },
             };
+
+    [CascadingParameter]
+    public string ColorStyle { get; set; }
 }

@@ -31,5 +31,6 @@ namespace BlazorServer.Pages
                 CreateDateTime = new(2021, 9, 7, 10, 20, 35),
             };
         }
+        public string ColorStyle { get; set; } = "color: goldenrod";
     }
 }
