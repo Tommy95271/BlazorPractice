@@ -1,7 +1,6 @@
 ﻿using BlazorServer.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,13 +28,10 @@ namespace BlazorServer.Pages
 
         [Parameter]
         public EventCallback<int> getPostId { get; set; }
-        [Parameter]
-        public Action<int> getPostIdForDelegate { get; set; }
 
         protected void returnPostId()
         {
-            //getPostId.InvokeAsync(Post.PostId);
-            getPostIdForDelegate.Invoke(Post.PostId);
+            getPostId.InvokeAsync(Post.PostId);
         }
     }
 }

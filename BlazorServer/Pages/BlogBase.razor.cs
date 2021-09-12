@@ -40,7 +40,6 @@ namespace BlazorServer.Pages
         protected void getPostId(int id)
         {
             Blog.Posts.Remove(Blog.Posts.FirstOrDefault(p => p.PostId == id));
-            StateHasChanged();
         }
     }
 }
