@@ -7,19 +7,24 @@
 }
 else
 {
-    <div class="form-group">
-        <label>部落格名稱</label>
-        <input @bind-value="Blog.BlogName" class="form-control w-25" />
-    </div>
-    foreach (var post in Blog.Posts)
-    {
-        <div class="border rounded p-3 w-25">
-            <CascadingValue Value="FontSizeStyle" Name="FontSizeStyle" IsFixed="true">
-                <CascadingValue Value="ColorStyle" Name="ColorStyle">
-                    <Post Post="post"></Post>
-                </CascadingValue>
-            </CascadingValue>
+    <div class="container">
+        <div class="row">
+            <div class="col pl-0">
+                <label>部落格名稱</label>
+                <input @bind-value="Blog.BlogName" class="form-control w-25" />
+                <MyButton value="Add" class="btn btn-info my-2" type="button" @onclick="add" />
+            </div>
         </div>
-        <br />
-    }
+        <div class="row">
+            @foreach (var post in Blog.Posts)
+            {
+                <div class="col-md-3 border rounded p-3 mr-2 mb-2 w-25">
+                    <CascadingValue Value="ColorStyle" Name="ColorStyle" IsFixed="true">
+                        <Post Post="post" getPostId="getPostId"></Post>
+                    </CascadingValue>
+                </div>
+                <br />
+            }
+        </div>
+    </div>
 }

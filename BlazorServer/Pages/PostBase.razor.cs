@@ -25,7 +25,13 @@ namespace BlazorServer.Pages
 
         [CascadingParameter(Name = "ColorStyle")]
         public string ColorStyle { get; set; }
-        [CascadingParameter(Name = "FontSizeStyle")]
-        public string FontSizeStyle { get; set; }
+
+        [Parameter]
+        public EventCallback<int> getPostId { get; set; }
+
+        protected void returnPostId()
+        {
+            getPostId.InvokeAsync(Post.PostId);
+        }
     }
 }
