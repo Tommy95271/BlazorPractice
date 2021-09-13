@@ -31,6 +31,11 @@
         <a class="dismiss">🗙</a>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
+    <script src="_framework/blazor.server.js" autostart="false"></script>
+    <script>
+        Blazor.start().then(function () {
+            console.log("這是第4種載入JS的方式");
+        });
+    </script>
 </body>
 </html>

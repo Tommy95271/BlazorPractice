@@ -1,6 +1,7 @@
 ﻿using BlazorServer.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,6 +9,9 @@ namespace BlazorServer.Pages
 {
     public class PostBase : ComponentBase
     {
+        [Inject]
+        protected IJSRuntime js { get; set; }
+
         [Parameter]
         public PostModel Post { get; set; }
         public EditContext editContext;
@@ -29,9 +33,13 @@ namespace BlazorServer.Pages
         [Parameter]
         public EventCallback<int> getPostId { get; set; }
 
-        protected void returnPostId()
+        protected async Task deletePost()
         {
-            getPostId.InvokeAsync(Post.PostId);
+            bool confirm = await js.InvokeAsync<bool>("confirm", $"是否刪除{Post.Title}?");
+            if (confirm)
+            {
+                await getPostId.InvokeAsync(Post.PostId);
+            }
         }
     }
 }
