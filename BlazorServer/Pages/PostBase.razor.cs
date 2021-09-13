@@ -1,23 +1,26 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Pages
 {
-    public class PostBase : ComponentBase
+    public class PostBase : ComponentBase, IDisposable
     {
         [Inject]
         protected IJSRuntime js { get; set; }
 
         [Parameter]
         public PostModel Post { get; set; }
-        public EditContext editContext;
+        public EditContext editContext { get; set; }
+        private JsInteropClasses jsClass;
 
         protected override Task OnInitializedAsync()
         {
+            jsClass = new(js);
             editContext = new EditContext(Post);
             editContext.SetFieldCssClassProvider(new CustomFieldClassProvider());
             return base.OnInitializedAsync();
@@ -35,11 +38,16 @@ namespace BlazorServer.Pages
 
         protected async Task deletePost()
         {
-            bool confirm = await js.InvokeAsync<bool>("confirm", $"是否刪除{Post.Title}?");
+            bool confirm = await jsClass.Confirm(Post.Title);
             if (confirm)
             {
                 await getPostId.InvokeAsync(Post.PostId);
             }
+        }
+
+        public void Dispose()
+        {
+            jsClass?.Dispose();
         }
     }
 }
