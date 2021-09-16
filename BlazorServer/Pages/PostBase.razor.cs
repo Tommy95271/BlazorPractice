@@ -1,4 +1,5 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.Repositories;
 using BlazorServer.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -10,11 +11,13 @@ namespace BlazorServer.Pages
 {
     public class PostBase : ComponentBase, IDisposable
     {
-        [Inject]
-        protected IJSRuntime js { get; set; }
+        [Inject] protected IJSRuntime js { get; set; }
+        [Inject] protected IPostRepository PostRepository { get; set; }
 
         [Parameter]
         public PostModel Post { get; set; }
+        [Parameter]
+        public EventCallback<int> getPostId { get; set; }
         public EditContext editContext { get; set; }
         private JsInteropClasses jsClass;
 
@@ -25,24 +28,23 @@ namespace BlazorServer.Pages
             editContext.SetFieldCssClassProvider(new CustomFieldClassProvider());
             return base.OnInitializedAsync();
         }
-        protected void TitleChanged(string value)
-        {
-            Post.Title = value;
-        }
 
         [CascadingParameter(Name = "ColorStyle")]
         public string ColorStyle { get; set; }
 
-        [Parameter]
-        public EventCallback<int> getPostId { get; set; }
-
         protected async Task deletePost()
         {
-            bool confirm = await jsClass.Confirm(Post.Title);
-            if (confirm)
+            bool result = await jsClass.Confirm(Post.Title);
+            if (result)
             {
+                await PostRepository.DeletePost(Post.PostId);
                 await getPostId.InvokeAsync(Post.PostId);
             }
+        }
+        protected async Task createPost()
+        {
+            var result = await PostRepository.CreatePost(Post);
+            await jsClass.Alert(result.Message);
         }
 
         public void Dispose()

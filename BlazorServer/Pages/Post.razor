@@ -2,14 +2,15 @@
 
 <div class="form-group">
     <div class="form-group">
+        <label>建立時間</label>
+        <input type="text" class="form-control" @bind="Post.CreateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" disabled />
+        <br />
         <label>更新時間</label>
-        <input type="text" class="form-control" @bind="Post.CreateDateTime" @bind:format="yyyy-MM-dd hh:mm:ss" disabled />
+        <input type="text" class="form-control" @bind="Post.UpdateDateTime" @bind:format="yyyy-MM-dd HH:mm:ss" disabled />
     </div>
-    <EditForm EditContext="editContext">
+    <EditForm EditContext="editContext" OnValidSubmit="createPost">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <label>Post Id:</label>
-        <span class="w-25">@Post.PostId</span>
         <div class="form-group">
             <label for="title" style="@ColorStyle">標題</label>
             <input type="text" class="form-control" @bind="Post.Title" @bind:event="oninput" />
@@ -20,7 +21,7 @@
             <InputTextArea @bind-Value="Post.Content" id="content" class="form-control" rows="4"></InputTextArea>
         </div>
         <div class="form-group">
-            <MyButton value="Submit" class="btn btn-primary" type="button" />
+            <MyButton value="Submit" class="btn btn-primary" type="submit" />
             <MyButton value="Reset" class="btn btn-dark" type="reset" />
             <input value="Delete" class="btn btn-danger" type="button" @onclick="deletePost"/>
         </div>

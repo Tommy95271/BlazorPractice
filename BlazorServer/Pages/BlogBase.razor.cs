@@ -17,8 +17,7 @@ namespace BlazorServer.Pages
         [Inject] protected IBlogRepository BlogRepository { get; set; }
         private JsInteropClasses jsClass;
 
-        public BlogModel Blog { get; set; }
-        private int postId { get; set; } = 0;
+        protected BlogModel Blog { get; set; }
         public string ColorStyle { get; set; } = "color: goldenrod";
         protected override async Task OnInitializedAsync()
         {
@@ -29,7 +28,6 @@ namespace BlazorServer.Pages
         {
             Blog = await BlogRepository.GetBlog();
         }
-
         protected async Task createBlog()
         {
             var result = await BlogRepository.CreateBlog(Blog);
@@ -45,8 +43,12 @@ namespace BlazorServer.Pages
 
         protected void add()
         {
-            postId++;
-            Blog.Posts.Add(new PostModel() { PostId = postId });
+            Blog.Posts.Add(new PostModel()
+            {
+                BlogId = Blog.BlogId,
+                CreateDateTime = DateTime.Now,
+                UpdateDateTime = DateTime.Now
+            });
         }
 
         protected void getPostId(int id)
