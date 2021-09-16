@@ -18,6 +18,11 @@ namespace BlazorServer.Shared
             return confirm;
         }
 
+        public async Task Alert(string message)
+        {
+            await js.InvokeAsync<string>("SweetAlert", message);
+        }
+
         public void Dispose()
         {
         }

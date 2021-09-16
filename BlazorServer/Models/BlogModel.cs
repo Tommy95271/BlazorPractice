@@ -8,6 +8,7 @@ namespace BlazorServer.Models
     {
         [Key]
         public int BlogId { get; set; }
+        [Required(ErrorMessage = "部落格名稱為必填")]
         [MaxLength(10, ErrorMessage = "部落格名稱太長")]
         public string BlogName { get; set; }
         public List<PostModel> Posts { get; set; }

@@ -1,5 +1,9 @@
 ﻿using BlazorServer.Models;
+using BlazorServer.Repositories;
+using BlazorServer.Shared;
+using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +13,35 @@ namespace BlazorServer.Pages
 {
     public class BlogBase : ComponentBase
     {
+        [Inject] protected IJSRuntime js { get; set; }
+        [Inject] protected IBlogRepository BlogRepository { get; set; }
+        private JsInteropClasses jsClass;
+
         public BlogModel Blog { get; set; }
         private int postId { get; set; } = 0;
-        protected override Task OnInitializedAsync()
+        public string ColorStyle { get; set; } = "color: goldenrod";
+        protected override async Task OnInitializedAsync()
         {
-            loadData();
-            return base.OnInitializedAsync();
+            jsClass = new(js);
+            await loadData();
         }
-        private void loadData()
+        private async Task loadData()
         {
-            Blog = new BlogModel
+            Blog = await BlogRepository.GetBlog();
+        }
+
+        protected async Task createBlog()
+        {
+            var result = await BlogRepository.CreateBlog(Blog);
+            if (result.IsSuccess)
             {
-                BlogId = 1,
-                BlogName = "我的部落格",
-                CreateDateTime = new(2021, 9, 7, 10, 20, 35),
-            };
-            if (Blog.Posts == null)
+                await loadData();
+            }
+            else
             {
-                Blog.Posts = new List<PostModel>();
+                await jsClass.Alert(result.Message);
             }
         }
-        public string ColorStyle { get; set; } = "color: goldenrod";
 
         protected void add()
         {

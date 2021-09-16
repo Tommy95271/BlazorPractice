@@ -1,4 +1,6 @@
 using BlazorServer.Models;
+using BlazorServer.Repositories;
+using BlazorServer.Repositories.Implement;
 using BlazorServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -33,6 +35,7 @@ namespace BlazorServer
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<IGuidService, GuidService>();
+            services.AddScoped<IBlogRepository, BlogRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
