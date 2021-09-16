@@ -37,8 +37,15 @@ namespace BlazorServer.Pages
             bool result = await jsClass.Confirm(Post.Title);
             if (result)
             {
-                await PostRepository.DeletePost(Post.PostId);
-                await getPostId.InvokeAsync(Post.PostId);
+                var deleted = await PostRepository.DeletePost(Post.PostId);
+                if (deleted.IsSuccess)
+                {
+                    await getPostId.InvokeAsync(Post.PostId);
+                }
+                else
+                {
+                    await jsClass.Alert(deleted.Message);
+                }
             }
         }
         protected async Task createPost()

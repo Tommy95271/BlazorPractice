@@ -45,6 +45,11 @@ namespace BlazorServer.Repositories.Implement
             }
             else
             {
+                var blog = _appDbContext.Blogs.Include(b => b.Posts).FirstOrDefault();
+                if (blog.Posts.Any(p => string.IsNullOrWhiteSpace(p.Title)))
+                {
+                    return new ResultViewModel() { IsSuccess = false, Message = $"不能有標題為空的 Post" };
+                }
                 _appDbContext.Posts.Remove(data);
                 _appDbContext.SaveChanges();
                 return new ResultViewModel() { IsSuccess = true, Message = $"{data.Title} 成功刪除" };
