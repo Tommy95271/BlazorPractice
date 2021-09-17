@@ -16,23 +16,49 @@ namespace BlazorServer.Repositories.Implement
         {
             _appDbContext = appDbContext;
         }
-        public async Task<BlogModel> GetBlog()
+        public async Task<BlogViewModel> GetBlog()
         {
-            var blog = await _appDbContext.Blogs.Include(b => b.Posts).FirstOrDefaultAsync();
+            BlogModel blog = await _appDbContext.Blogs.Include(b => b.Posts).FirstOrDefaultAsync();
             if (blog == null)
             {
-                blog = new BlogModel();
+                return new BlogViewModel();
             }
-            return blog;
+            else
+            {
+                BlogViewModel blogViewModel = new BlogViewModel()
+                {
+                    BlogId = blog.BlogId,
+                    BlogName = blog.BlogName,
+                    CreateDateTime = blog.CreateDateTime,
+                    Posts = blog.Posts.Select(p => new PostViewModel()
+                    {
+                        PostId = p.PostId,
+                        BlogId = p.BlogId,
+                        Blog = new()
+                        {
+                            BlogId = p.BlogId,
+                            BlogName = p.Blog.BlogName,
+                            CreateDateTime = p.CreateDateTime
+                        },
+                        Title = p.Title,
+                        Content = p.Content,
+                        CreateDateTime = p.CreateDateTime,
+                        UpdateDateTime = p.UpdateDateTime,
+                    }).ToList()
+                };
+                return blogViewModel;
+            }
         }
-        public async Task<ResultViewModel> CreateBlog(BlogModel blog)
+        public async Task<ResultViewModel> CreateBlog(BlogViewModel blog)
         {
-            var data = await _appDbContext.Blogs
+            BlogModel data = await _appDbContext.Blogs
                 .FirstOrDefaultAsync(x => x.BlogId == blog.BlogId);
             if (data == null)
             {
-                blog.CreateDateTime = DateTime.Now;
-                _appDbContext.Blogs.Add(blog);
+                data = new();
+                data.BlogName = blog.BlogName;
+                data.CreateDateTime = DateTime.Now;
+                _appDbContext.Blogs.Add(data);
                 _appDbContext.SaveChanges();
                 return new ResultViewModel() { IsSuccess = true, Message = $"{blog.BlogName} 建立成功" };
             }

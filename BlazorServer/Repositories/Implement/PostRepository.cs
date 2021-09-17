@@ -16,13 +16,21 @@ namespace BlazorServer.Repositories.Implement
         {
             _appDbContext = appDbContext;
         }
-        public async Task<ResultViewModel> CreatePost(PostModel post)
+        public async Task<ResultViewModel> CreatePost(PostViewModel post)
         {
-            var data = await _appDbContext.Posts
+            PostModel data = await _appDbContext.Posts
                 .FirstOrDefaultAsync(x => x.PostId == post.PostId);
             if (data == null)
             {
-                _appDbContext.Posts.Add(post);
+                data = new()
+                {
+                    Title = post.Title,
+                    Content = post.Content,
+                    CreateDateTime = post.CreateDateTime,
+                    UpdateDateTime = post.UpdateDateTime,
+                    BlogId = post.BlogId
+                };
+                _appDbContext.Posts.Add(data);
                 _appDbContext.SaveChanges();
                 return new ResultViewModel() { IsSuccess = true, Message = $"{post.Title} 建立成功" };
             }
@@ -45,11 +53,6 @@ namespace BlazorServer.Repositories.Implement
             }
             else
             {
-                var blog = _appDbContext.Blogs.Include(b => b.Posts).FirstOrDefault();
-                if (blog.Posts.Any(p => string.IsNullOrWhiteSpace(p.Title)))
-                {
-                    return new ResultViewModel() { IsSuccess = false, Message = $"不能有標題為空的 Post" };
-                }
                 _appDbContext.Posts.Remove(data);
                 _appDbContext.SaveChanges();
                 return new ResultViewModel() { IsSuccess = true, Message = $"{data.Title} 成功刪除" };

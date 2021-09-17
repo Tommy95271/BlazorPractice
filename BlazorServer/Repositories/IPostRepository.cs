@@ -6,7 +6,7 @@ namespace BlazorServer.Repositories
 {
     public interface IPostRepository
     {
-        Task<ResultViewModel> CreatePost(PostModel post);
+        Task<ResultViewModel> CreatePost(PostViewModel post);
         Task<ResultViewModel> DeletePost(int postId);
     }
 }

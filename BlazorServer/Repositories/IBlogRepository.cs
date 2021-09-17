@@ -6,7 +6,7 @@ namespace BlazorServer.Repositories
 {
     public interface IBlogRepository
     {
-        Task<ResultViewModel> CreateBlog(BlogModel blog);
-        Task<BlogModel> GetBlog();
+        Task<ResultViewModel> CreateBlog(BlogViewModel blog);
+        Task<BlogViewModel> GetBlog();
     }
 }

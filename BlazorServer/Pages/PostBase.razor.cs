@@ -1,6 +1,7 @@
 ﻿using BlazorServer.Models;
 using BlazorServer.Repositories;
 using BlazorServer.Shared;
+using BlazorServer.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -15,9 +16,11 @@ namespace BlazorServer.Pages
         [Inject] protected IPostRepository PostRepository { get; set; }
 
         [Parameter]
-        public PostModel Post { get; set; }
+        public PostViewModel Post { get; set; }
         [Parameter]
         public EventCallback<int> getPostId { get; set; }
+        [Parameter]
+        public EventCallback postCreated { get; set; }
         public EditContext editContext { get; set; }
         private JsInteropClasses jsClass;
 
@@ -51,6 +54,10 @@ namespace BlazorServer.Pages
         protected async Task createPost()
         {
             var result = await PostRepository.CreatePost(Post);
+            if (result.IsSuccess)
+            {
+                await postCreated.InvokeAsync();
+            }
             await jsClass.Alert(result.Message);
         }
 
