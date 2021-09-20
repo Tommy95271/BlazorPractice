@@ -34,11 +34,12 @@
 
     <script src="_framework/blazor.server.js"></script>
     <script>
-        function SweetConfirm(title) {
+        function SweetConfirm(jsonString) {
+            var arg = JSON.parse(jsonString);
             return new Promise((resolve) => {
                 Swal.fire({
-                    title: title,
-                    text: "這個動作不可復原",
+                    title: arg.RequestTitle,
+                    text: arg.RequestText,
                     icon: "warning",
                     showCancelButton: true,
                     cancelButtonText: "取消",
@@ -49,8 +50,8 @@
                     resolve(result.isConfirmed);
                     if (result.isConfirmed) {
                         Swal.fire(
-                            "刪除成功",
-                            "日誌被刪除了",
+                            arg.ResponseTitle,
+                            arg.ResponseText,
                             "success"
                         );
                     }

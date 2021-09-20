@@ -1,0 +1,23 @@
+﻿@page "/FileUpload"
+
+<div>
+    <div>
+        <InputFile OnChange="OnChange" multiple></InputFile>
+    </div>
+    <div>
+        <MyButton value="Submit" class="btn btn-primary" type="submit" @onclick="OnSubmit" />
+    </div>
+</div>
+@if (ImageList != null)
+{
+    <table>
+        <tr>
+            @foreach (var img in ImageList)
+            {
+                <td>
+                    <img src="@img" width="150" height="150" />
+                </td>
+            }
+        </tr>
+    </table>
+}

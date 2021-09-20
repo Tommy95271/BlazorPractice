@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace BlazorServer.Pages
@@ -37,7 +38,15 @@ namespace BlazorServer.Pages
 
         protected async Task deletePost()
         {
-            bool result = await jsClass.Confirm(Post.Title);
+            SweetConfirmViewModel sweetConfirm = new SweetConfirmViewModel()
+            {
+                RequestTitle = $"是否確定刪除日誌{Post.Title}？",
+                RequestText = "這個動作不可復原",
+                ResponseTitle = "刪除成功",
+                ResponseText = "日誌被刪除了",
+            };
+            string jsonString = JsonSerializer.Serialize(sweetConfirm);
+            bool result = await jsClass.Confirm(jsonString);
             if (result)
             {
                 var deleted = await PostRepository.DeletePost(Post.PostId);

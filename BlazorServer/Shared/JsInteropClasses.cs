@@ -12,9 +12,9 @@ namespace BlazorServer.Shared
             this.js = js;
         }
 
-        public async ValueTask<bool> Confirm(string title)
+        public async ValueTask<bool> Confirm(string jsonString)
         {
-            bool confirm = await js.InvokeAsync<bool>("SweetConfirm", $"是否確定刪除日誌{title}？");
+            bool confirm = await js.InvokeAsync<bool>("SweetConfirm", jsonString);
             return confirm;
         }
 
