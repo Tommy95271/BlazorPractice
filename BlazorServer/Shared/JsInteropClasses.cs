@@ -23,6 +23,11 @@ namespace BlazorServer.Shared
             await js.InvokeAsync<string>("SweetAlert", message);
         }
 
+        public async Task ConsoleLog(string message)
+        {
+            await js.InvokeVoidAsync("console.log", message);
+        }
+
         public void Dispose()
         {
         }

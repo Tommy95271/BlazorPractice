@@ -22,11 +22,16 @@ namespace BlazorServer.Pages
         protected override async Task OnInitializedAsync()
         {
             jsClass = new(js);
+            await jsClass.ConsoleLog("這是Blazor Server的console.log訊息");
             await loadData();
         }
         private async Task loadData()
         {
             Blog = await BlogRepository.GetBlog();
+        }
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await jsClass.ConsoleLog("這是Blazor Server的console.log訊息");
         }
         protected async Task createBlog()
         {

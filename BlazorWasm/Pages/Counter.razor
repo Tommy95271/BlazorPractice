@@ -1,4 +1,6 @@
 ﻿@page "/counter"
+@using Microsoft.Extensions.Logging;
+@inject ILogger<Counter> logger;
 
 <h1>Counter</h1>
 
@@ -11,6 +13,8 @@
 
     private void IncrementCount()
     {
+        logger.LogWarning("有人點擊我了！");
+
         currentCount++;
     }
 }
