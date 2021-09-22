@@ -36,7 +36,7 @@ namespace BlazorServer.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return LocalRedirect("~/Blog");
             }
         }
     }

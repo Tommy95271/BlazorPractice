@@ -1,48 +1,55 @@
 ﻿@page "/Blog"
 @inherits BlogBase
-
-@if (Blog == null)
-{
-    <p>Loading...</p>
-}
-else
-{
-    if (Blog.BlogId == 0)
-    {
-        <EditForm Model="Blog" OnValidSubmit="createBlog">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-            <span class="w-25">看起來你還沒建立部落格，來建立一個新的部落格吧！</span>
-            <div class="form-group mt-2">
-                <InputText @bind-Value="Blog.BlogName"
-                           id="blogName" class="form-control w-25" placeholder="請輸入部落格名稱"></InputText>
-            </div>
-            <div class="form-group">
-                <MyButton value="Submit" class="btn btn-primary" type="submit" />
-            </div>
-        </EditForm>
-    }
-    else
-    {
-        <div class="container">
-            <div class="row">
-                <div class="col pl-0">
-                    <label>部落格名稱</label>
-                    <h3 class="w-25">@Blog.BlogName</h3>
-                    <MyButton value="Add" class="btn btn-info my-2" type="button" @onclick="add" />
-                </div>
-            </div>
-            <div class="row">
-                @foreach (var post in Blog.Posts)
-                {
-                    <div class="col-md-3 border rounded p-3 mr-2 mb-2 w-25">
-                        <CascadingValue Value="ColorStyle" Name="ColorStyle" IsFixed="true">
-                            <Post Post="post" getPostId="getPostId" postCreated="postCreated"></Post>
-                        </CascadingValue>
+<AuthorizeView>
+    <Authorized Context="IdentityContext">
+        @if (Blog == null)
+        {
+            <p>Loading...</p>
+        }
+        else
+        {
+            if (Blog.BlogId == 0)
+            {
+                <EditForm Model="Blog" OnValidSubmit="createBlog">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <span class="w-25">看起來你還沒建立部落格，來建立一個新的部落格吧！</span>
+                    <div class="form-group mt-2">
+                        <InputText @bind-Value="Blog.BlogName"
+                                   id="blogName" class="form-control w-25" placeholder="請輸入部落格名稱"></InputText>
                     </div>
-                    <br />
-                }
-            </div>
-        </div>
-    }
-}
+                    <div class="form-group">
+                        <MyButton value="Submit" class="btn btn-primary" type="submit" />
+                    </div>
+                </EditForm>
+            }
+            else
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col pl-0">
+                            <label>部落格名稱</label>
+                            <h3 class="w-25">@Blog.BlogName</h3>
+                            <MyButton value="Add" class="btn btn-info my-2" type="button" @onclick="add" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach (var post in Blog.Posts)
+                        {
+                            <div class="col-md-3 border rounded p-3 mr-2 mb-2 w-25">
+                                <CascadingValue Value="ColorStyle" Name="ColorStyle" IsFixed="true">
+                                    <Post Post="post" getPostId="getPostId" postCreated="postCreated"></Post>
+                                </CascadingValue>
+                            </div>
+                            <br />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>很抱歉，你沒有權限看到這裡！
+        </p>
+    </NotAuthorized>
+</AuthorizeView>
