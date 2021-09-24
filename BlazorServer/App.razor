@@ -1,11 +1,15 @@
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <p>很抱歉，你沒有權限看到這裡！</p>
+                </NotAuthorized>
+            </AuthorizeRouteView>
         </Found>
         <NotFound>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
+                <p>很抱歉，你輸入的網址不存在</p>
             </LayoutView>
         </NotFound>
     </Router>
