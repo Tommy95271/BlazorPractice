@@ -1,0 +1,37 @@
+﻿@page "/RolesManagement/EditRole/{RoleId}"
+@attribute [Authorize]
+
+<EditForm class="mt-3" Model="Role" OnValidSubmit="editRole">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group row">
+        <label for="RoleName" class="col-sm-1 col-form-label">角色名稱</label>
+        <div class="col-sm-3">
+            <InputText @bind-Value="Role.RoleName" id="RoleName" class="form-control" placeholder="角色名稱"></InputText>
+        </div>
+    </div>
+
+    <div class="card mb-3 w-50">
+        <div class="card-header">
+            <h3>角色底下的使用者</h3>
+        </div>
+        <div class="card-body">
+            @if (Role.Users.Any())
+            {
+                foreach (var user in Role.Users)
+                {
+                    <h5 class="card-title">@user</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">目前該角色沒有指派給任何使用者</h5>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">更新角色</button>
+            <button type="button" class="btn btn-danger" @onclick="Cancel">取消</button>
+        </div>
+    </div>
+
+</EditForm>
