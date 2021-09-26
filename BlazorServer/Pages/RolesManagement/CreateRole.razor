@@ -1,5 +1,5 @@
 ﻿@page "/RolesManagement/CreateRole"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <EditForm class="mt-3" Model="Role" OnValidSubmit="createRole">
     <DataAnnotationsValidator />

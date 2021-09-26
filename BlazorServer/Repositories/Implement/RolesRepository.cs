@@ -120,6 +120,82 @@ namespace BlazorServer.Services
                 IsSuccess = false
             };
         }
+
+        public async Task<List<CustomUserRoleViewModel>> EditUsersInRoleAsync(string RoleId)
+        {
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            var model = new List<CustomUserRoleViewModel>();
+
+            foreach (var user in _userManager.Users)
+            {
+                var userRoleViewModel = new CustomUserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+                model.Add(userRoleViewModel);
+            }
+            return model;
+        }
+
+        public async Task<ResultViewModel> EditUsersInRoleAsync(List<CustomUserRoleViewModel> model, string RoleId)
+        {
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            foreach (var m in model)
+            {
+                var user = await _userManager.FindByIdAsync(m.UserId);
+                IdentityResult result;
+                if (m.IsSelected && !(await _userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await _userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!m.IsSelected && await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+                if (result.Succeeded)
+                {
+                    if (model.Count > 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return new ResultViewModel
+                        {
+                            Message = RoleId,
+                            IsSuccess = true
+                        };
+                    }
+                }
+                else
+                {
+                    return new ResultViewModel
+                    {
+                        Message = RoleId,
+                        IsSuccess = false
+                    };
+                }
+            }
+            return new ResultViewModel
+            {
+                Message = RoleId,
+                IsSuccess = true
+            };
+        }
         #endregion
     }
 }

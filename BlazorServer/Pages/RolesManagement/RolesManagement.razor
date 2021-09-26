@@ -1,5 +1,5 @@
 ﻿@page "/RolesManagement/RolesList"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <h1>所有角色</h1>
 

@@ -27,6 +27,10 @@ namespace BlazorServer.Pages.RolesManagement
             await RolesRepository.EditRoleAsync(Role);
             NavigationManager.NavigateTo("/RolesManagement/RolesList");
         }
+        public void EditUsersInRole()
+        {
+            NavigationManager.NavigateTo($"/RolesManagement/EditUsersInRole/{RoleId}");
+        }
         public void Cancel()
         {
             NavigationManager.NavigateTo($"/RolesManagement/RolesList");

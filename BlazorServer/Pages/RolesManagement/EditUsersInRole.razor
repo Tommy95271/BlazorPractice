@@ -1,0 +1,27 @@
+﻿@page "/RolesManagement/EditUsersInRole/{RoleId}"
+@attribute [Authorize(Roles = "Admin")]
+
+<EditForm Model="UserRoleViewModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="card">
+        <div class="card-header">
+            <h2>從角色新增或移除使用者</h2>
+        </div>
+        <div class="card-body">
+            @foreach (var user in UserRoleViewModel)
+            {
+                <div class="form-check m-1">
+                    <label class="form-check-label">
+                        <InputCheckbox @bind-Value="@user.IsSelected"></InputCheckbox>
+                        @user.UserName
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">更新</button>
+            <button type="button" class="btn btn-danger" @onclick="@Cancel">取消</button>
+        </div>
+    </div>
+</EditForm>

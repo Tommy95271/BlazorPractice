@@ -11,5 +11,7 @@ namespace BlazorServer.Services
         Task<ResultViewModel> CreateRoleAsync(CustomRoleViewModel model);
         Task<ResultViewModel> EditRoleAsync(CustomRoleViewModel model);
         Task<ResultViewModel> DeleteRoleAsync(string roleId);
+        Task<List<CustomUserRoleViewModel>> EditUsersInRoleAsync(string RoleId);
+        Task<ResultViewModel> EditUsersInRoleAsync(List<CustomUserRoleViewModel> model, string RoleId);
     }
 }
