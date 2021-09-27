@@ -1,0 +1,37 @@
+﻿@page "/UserManagement/EditUser/{UserId}"
+
+<EditForm class="mt-3" Model="User" OnValidSubmit="editRole">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group row">
+        <label for="RoleName" class="col-sm-1 col-form-label">使用者名稱</label>
+        <div class="col-sm-3">
+            <InputText @bind-Value="User.UserName" id="RoleName" class="form-control" placeholder="使用者名稱"></InputText>
+        </div>
+    </div>
+
+    <div class="card mb-3 w-50">
+        <div class="card-header">
+            <h3>使用者底下的 Claim</h3>
+        </div>
+        <div class="card-body">
+            @if (User.Claims.Any())
+            {
+                foreach (var claim in User.Claims)
+                {
+                    <h5 class="card-title">@claim</h5>
+                }
+            }
+            else
+            {
+                <h5 class="card-title">目前該使用者沒有任何 Claim</h5>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">更新使用者</button>
+            <button type="button" class="btn btn-info" @onclick="EditUsersInRole">新增或移除該使用者底下的 Claim</button>
+            <button type="button" class="btn btn-danger" @onclick="Cancel">取消</button>
+        </div>
+    </div>
+
+</EditForm>

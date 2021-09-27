@@ -1,0 +1,26 @@
+﻿@page "/UserManagement/EditClaimsInUser/{UserId}"
+
+<EditForm Model="UserClaimViewModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="card">
+        <div class="card-header">
+            <h2>從使用者新增或移除 Claim</h2>
+        </div>
+        <div class="card-body">
+            @foreach (var claim in UserClaimViewModel.Cliams)
+            {
+                <div class="form-check m-1">
+                    <label class="form-check-label">
+                        <InputCheckbox @bind-Value="@claim.IsSelected"></InputCheckbox>
+                        @claim.ClaimType
+                    </label>
+                </div>
+            }
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">更新</button>
+            <button type="button" class="btn btn-danger" @onclick="@Cancel">取消</button>
+        </div>
+    </div>
+</EditForm>

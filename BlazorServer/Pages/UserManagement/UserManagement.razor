@@ -1,0 +1,46 @@
+﻿@page "/UserManagement/UserList"
+
+<h1>所有使用者</h1>
+
+@if (Users.Any())
+{
+    <NavLink class="btn btn-primary mb-3" href="Identity/Account/Register" Match="NavLinkMatch.All">
+        新增使用者
+    </NavLink>
+
+    foreach (var user in Users)
+    {
+        <div class="card mb-3 w-25">
+            <div class="card-header">
+                User Id : @user.UserId
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary" @onclick="()=>editUser(user.UserId)">
+                    編輯使用者
+                </button>
+                <button type="button" class="btn btn-danger" @onclick="()=>deleteUser(user.UserId)">
+                    刪除使用者
+                </button>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card w-25">
+        <div class="card-header">
+            還沒有使用者
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                按底下的按鈕建立使用者
+            </h5>
+            <NavLink class="btn btn-primary" href="Identity/Account/Register" Match="NavLinkMatch.All">
+                新增使用者
+            </NavLink>
+        </div>
+    </div>
+}
