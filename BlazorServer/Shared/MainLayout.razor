@@ -11,7 +11,23 @@
         </div>
 
         <div class="content px-4">
-            @Body
+            <ErrorBoundary @ref="errorBoundary">
+                <ChildContent>
+                    @Body
+                </ChildContent>
+                <ErrorContent>
+                    <p>很抱歉，目前出現未知錯誤，請聯絡管理員</p>
+                </ErrorContent>
+            </ErrorBoundary>
         </div>
     </div>
 </div>
+
+@code {
+    private ErrorBoundary errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+}

@@ -28,6 +28,7 @@ namespace BlazorServer.Pages
         private async Task loadData()
         {
             Blog = await BlogRepository.GetBlog();
+            throw new Exception("這是測試錯誤訊息");
         }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
